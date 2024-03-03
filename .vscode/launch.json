@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/K1/Desktop/Prace/TEB/Klasa 4/post",
-      "program": "c:/Users/K1/Desktop/Prace/TEB/Klasa 4/post/build/Debug/outDebug",
+      "cwd": "d:/app/xampp/htdocs/post",
+      "program": "d:/app/xampp/htdocs/post/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

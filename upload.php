@@ -1,29 +1,25 @@
 <?php
 if(!empty($_POST)) {
-    $postTitle = $_POST['postTitle'];  #sprawdzić co to $_POST
+    $postTitle = $_POST['postTitle'];
     $postDescription = $_POST['postDescription'];
-    $targetDirectory = "img/"; # to potencjalnie nie działa
-    // $fileName = hash('sha256', $_FILES['file']['name'].microtime());
-    $fileName = $_FILES['file']['name'];
-   // $fileString = file_get_contents($_FILES['file']['tmp_name']);
-   // $gdImage = imagecreatefromstring($fileString);
-   move_uploaded_file($_FILES['file']['tmp_name'], $targetDirectory.$fileName);
+    $targetDirectory = "img/";
+    $fileName = hash('sha256', $_FILES['file']['name'].microtime());
+    
+    $fileString = file_get_contents($_FILES['file']['tmp_name']);
 
-    /*
-    $finalURL = "http://localhost/post/img/".$fileName.".webp";
-    $internalURL = "img/".$fileName.".webp";
+    $gdImage = imagecreatefromstring($fileString);
+
+    $finalUrl = "http://localhost/post/img/".$fileName.".webp";
+    $internalUrl = "img/".$fileName.".webp";
 
     imagewebp($gdImage, $internalURL);
-*/
+
     $authorID = 1;
-    // $imageURL = "localhost/post/img/".$fileName;
-    $imageURL = "img/".$fileName;
 
 
     $db = new mysqli('localhost', 'root', '', 'post');
     $q = $db->prepare("INSERT INTO post (author, imgURL, title) VALUES (?, ?, ?)");
-
-    $q->bind_param("iss", $authorID, $imageURL, $postTitle);
+    $q->bind_param("iss", $authorID, $finalURL, $postTitle);
     $q->execute();
 }
 ?>

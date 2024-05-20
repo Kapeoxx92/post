@@ -1,26 +1,9 @@
 <?php
-if(!empty($_POST)) {
-    $postTitle = $_POST['postTitle'];
-    $postDescription = $_POST['postDescription'];
-    $targetDirectory = "img/";
-    $fileName = hash('sha256', $_FILES['file']['name'].microtime());
-    
-    $fileString = file_get_contents($_FILES['file']['tmp_name']);
-
-    $gdImage = imagecreatefromstring($fileString);
-
-    $finalUrl = "http://localhost/post/img/".$fileName.".webp";
-    $internalUrl = "img/".$fileName.".webp";
-
-    imagewebp($gdImage, $internalURL);
-
-    $authorID = 1;
-
-
-    $db = new mysqli('localhost', 'root', '', 'post');
-    $q = $db->prepare("INSERT INTO post (author, imgURL, title) VALUES (?, ?, ?)");
-    $q->bind_param("iss", $authorID, $finalURL, $postTitle);
-    $q->execute();
+require_once('class/Post.class.php');
+require_once('class/User.class.php');
+session_start();
+if(!empty($_POST) && isset($_SESSION['user'])) {
+    Post::CreatePost($_POST['postTitle'], $_POST['postDescription']);
 }
 ?>
 
